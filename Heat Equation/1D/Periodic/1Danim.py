@@ -15,9 +15,10 @@ x = np.linspace(-1, 1, nx)
 
 # Time:
 
+T = 0.5
 dt = 0.0001
-T = 1
 N = int(T/dt)+1
+t = np.zeros(N)
 
 # Physics:
 
@@ -27,6 +28,8 @@ nu = 0.1
 
 if dt > dx**2/(2*nu):
     dt = dx**2/(2*nu)
+    N = int(T/dt)+1
+    print(f'Stability Warning: Timestep adjusted to dt = {dt}')
 
 # Initialization:
 
@@ -49,6 +52,7 @@ def laplacian(f):
 for i in range(N-1):
     
     u[i+1] = u[i] + nu*laplacian(u[i])*dt
+    t[i+1] = t[i] + dt
 
 
 # Animation: 
@@ -67,8 +71,9 @@ ax.set_xlim(-1, 1)
 
 line, = ax.plot([], [])
 
-def update(frames):
-    line.set_data(x, u[frames])
+def update(frame):
+    line.set_data(x, u[frame])
+    ax.set_title(f't = {t[frame]:.2f}')
 
     return line,
 
@@ -76,8 +81,4 @@ frames = range(0, len(u), step) # frames can be an iterable as well as int.
 
 ani = FuncAnimation(fig, update, frames=frames, interval=20)
 
-
 plt.show()
-
-
-
