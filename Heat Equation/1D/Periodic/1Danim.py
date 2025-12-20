@@ -29,6 +29,7 @@ nu = 0.1
 if dt > dx**2/(2*nu):
     dt = dx**2/(2*nu)
     N = int(T/dt)+1
+    t = np.zeros(N)
     print(f'Stability Warning: Timestep adjusted to dt = {dt}')
 
 # Initialization:
