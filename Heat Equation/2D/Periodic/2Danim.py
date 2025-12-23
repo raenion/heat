@@ -1,20 +1,30 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-T = 1
-dt = 0.0001
-N = int(T/dt) + 1
+# Space:
+
 nx = 50
 ny = 50
 dx = 2/(nx-1)
 dy = 2/(ny-1)
-mu = 0.1
-
 xvec = np.linspace(-1, 1,  nx)
 yvec = np.linspace(-1, 1, ny) 
-x, y = np.meshgrid(xvec,yvec)
+x, y = np.meshgrid(xvec, yvec)
 
+# Time:
+
+T = 1
+dt = 0.0001
+N = int(T/dt) + 1
 t = np.zeros(N)
+
+# Physics:
+
+mu = 0.1
+
+##
+
+
 u = np.zeros((N, ny, nx))
 
 
