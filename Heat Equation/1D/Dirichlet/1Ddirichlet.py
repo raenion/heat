@@ -46,7 +46,7 @@ u0 = np.tan(1.5*x) # intentionally sharp IC to test stability
 
 u[0] = u0
 
-# Save boundary values as constants: 
+## Save boundary values as constants: 
 
 c1 = u0[0]
 c2 = u0[-1]
