@@ -1,16 +1,40 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+"""
+1D Heat Equation
+Domain: [-1, 1]
+BC: Dirichlet
+Scheme: Explicit Euler (FTCS)
+"""
+
+# Space:
+
+nx = 300
+dx = 2/(nx-1)
+x = np.linspace(-1, 1, nx)
+
+# Time:
+
 T = 3
 dt = 0.0001
 N = int(T/dt) + 1
-nx = 300
-dx = 2/(nx-1)
+t = np.zeros(N)
+
+# Physics:
+
 nu = 0.1
 
-x = np.linspace(-1, 1, nx)
-t = np.zeros(N)
-u = np.zeros((N, nx))
+# Stability check and conditional adjustment:
+
+if dt > dx**2/(2*nu):
+    dt = dx**2/(2*nu)
+    N = int(T/dt)+1
+    t = np.zeros(N)
+    print(f'Stability Warning: Timestep adjusted to dt = {dt}')
+
+
+# Some possible initial conditions:
 
 #u0 = 1/8*(x+1)**4
 #u0 = np.sin(4*x)
@@ -19,7 +43,13 @@ u0 = np.exp(100*x)
 #u0 = x**10
 #u0 = np.sin(np.exp(-3*x))
 
+# Initialization:
+
+u = np.zeros((N, nx))
+
 u[0] = u0
+
+## Save boundary values as constants: 
 
 c1 = u0[0]
 c2 = u0[-1]
@@ -31,15 +61,18 @@ def laplacian1D(vec):      # same function name as periodic 1d laplacian
     
     return newvec
 
+# Explicit Euler scheme integrator loop:
+
 for i in range(N-1):
     t[i+1] = t[i] + dt
     u[i+1] = u[i] + nu*laplacian1D(u[i])*dt
+
+    # Keeping Dirichlet condition by setting boundaries back to fixed values:
+    
     u[i+1,0] = c1
     u[i+1,-1] = c2
 
-
-
-#### Animate
+# Animation:
 
 from matplotlib.animation import FuncAnimation 
 
