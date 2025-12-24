@@ -33,20 +33,19 @@ if dt > dx**2/(2*nu):
     t = np.zeros(N)
     print(f'Stability Warning: Timestep adjusted to dt = {dt}')
 
-# Initialization:
-
-u = np.zeros((N, nx))
-
-## Some possible initial conditions:
+# Some possible initial conditions:
 
 #u0 = 1/8*(x+1)**4
 #u0 = np.sin(4*x)
 #u0 = np.exp(100*x)
 u0 = np.tan(1.5*x) # intentionally sharp IC to test stability
 
+# Initialization: 
+
+u = np.zeros((N, nx))
 u[0] = u0
 
-# Save boundary values as constants: 
+## Save boundary values as constants: 
 
 c1 = u0[0]
 c2 = u0[-1]
@@ -68,7 +67,7 @@ for i in range(N-1):
     t[i+1] = t[i] + dt
     u[i+1] = u[i] + nu*laplacian1D(u[i])*dt
 
-    # Keeping Dirichlet condition by setting boundaries back to fixed values
+    # Keeping Dirichlet condition by setting boundaries back to fixed values:
     
     u[i+1, 0] = c1
     u[i+1, -1] = c2
