@@ -51,7 +51,7 @@ u[0] = u0
 c1 = u0[0]
 c2 = u0[-1]
 
-# Laplcain 
+# 1D Laplacian:
 
 def laplacian1D(vec):
 
@@ -62,7 +62,7 @@ def laplacian1D(vec):
     
     return newvec
 
-# Explicit Euler scheme integrator loop.
+# Explicit Euler scheme integrator loop:
 
 for i in range(N-1):
     t[i+1] = t[i] + dt
