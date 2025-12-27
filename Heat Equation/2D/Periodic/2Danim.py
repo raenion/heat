@@ -12,10 +12,10 @@ Scheme: Explicit Euler (FTCS)
 
 nx = 50
 ny = 50
-dx = 2/(nx-1)
-dy = 2/(ny-1)
-xvec = np.linspace(-1, 1,  nx)
-yvec = np.linspace(-1, 1, ny) 
+xvec = np.linspace(-1, 1,  nx, endpoint=False)
+yvec = np.linspace(-1, 1, ny, endpoint=False)
+dx = 2/(nx)
+dy = 2/(ny)
 x, y = np.meshgrid(xvec, yvec)
 
 # Time:
@@ -79,12 +79,17 @@ ax.set_zlim(np.min(u[0]), np.max(u[0]))
 surf = ax.plot_surface(x,y,u[0], cmap='viridis', edgecolor='none')
 
 # TODO: There are currently stutters/mini-jumps/inconsistencies in the animation.
-
+'''
 def update(frame):
     global surf
     surf.remove()
     surf = ax.plot_surface(x,y,u[frame], cmap='viridis', edgecolor='none')
     
+    return surf,
+'''
+
+def update(frame):
+    surf._vec[:, 2] = u[frame].ravel()
     return surf,
 
 steps = 30
